@@ -209,3 +209,7 @@ canvas {
   margin: auto;
   align-self: center;
 }
+
+#canvasdiv {
+  position: relative;
+}
