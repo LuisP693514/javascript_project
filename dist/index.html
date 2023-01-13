@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./main.css"></link>
+    <link href="./main.css" rel="stylesheet" ></link>
     <script src="./main.js"></script>
     <title>title</title>
 </head>
@@ -17,30 +17,32 @@
             </ul>
         </nav>
     </header>
-
-    <h4> Default Controls: </h4>
-    <ul>
-        <li> Movement: </li>
-        <ul id="defaultMovement"> 
-            <li id="upLI">Up: <p class="movement_p">W</p></li>
-            <li id="downLI">Down: <p class="movement_p">S</p></li>
-            <li id="leftLI">Left: <p class="movement_p">A</p></li>
-            <li id="rightLI">Right: <p class="movement_p">D</p></li>
-        </ul>
-        <li> Abilities: </li>
+    <div id="controlsDiv">
+        <h4> Default Controls: </h4>
         <ul>
-            <li>Bomb: Space Bar 
-                <p> Destroys everything on screen except bosses </p>
-            </li>
-            <li>Shoot: M 
-                <p></p>
-            </li>
-            <li>Slow Down: N
-                <p> Slow down your own movement to dodge better</p>
-            </li>
+            <ul id="defaultMovement"> 
+                <li>Movement:</li>
+                <li id="upLI">Up: <p class="movement_p">W</p></li>
+                <li id="downLI">Down: <p class="movement_p">S</p></li>
+                <li id="leftLI">Left: <p class="movement_p">A</p></li>
+                <li id="rightLI">Right: <p class="movement_p">D</p></li>
+            </ul>
+            <ul id="defaultAbilities">
+                <li>Abilities:</li>
+                <li>Bomb: Space Bar 
+                    <p> Destroys everything on screen except bosses </p>
+                </li>
+                <li>Shoot: Automatic 
+                    <p>Just point the mouse in the direction in which you want to shoot</p>
+                </li>
+                <li>Slow Down: N
+                    <p> Slow down your own movement</p>
+                </li>
+            </ul>
         </ul>
-    </ul>
-
-    <canvas id="canvas"></canvas>
+    </div>
+    <div>
+        <canvas id="canvas1"></canvas>
+    </div>
 </body>
 </html>

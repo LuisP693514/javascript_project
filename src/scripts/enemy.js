@@ -1,7 +1,7 @@
 console.log("im in the enemy file")
 
 class Enemy {
-    constructor(){
+    constructor() {
 
     }
 }

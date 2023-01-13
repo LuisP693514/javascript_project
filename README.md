@@ -7,7 +7,7 @@ This project uses the canvas library to render the game onto the page.
 
 ## Gameplay
 
-{description of how the game works}
+The user spawns into the map
 
 ## Wireframe
 
@@ -15,10 +15,8 @@ This project uses the canvas library to render the game onto the page.
 
 ## Licenses
 
-Background images used from https://craftpix.net/file-licenses/
+Background images used are from craftpix.net: https://craftpix.net/file-licenses/
 
-Github icon from google images
-
-
+Github icon from google images.
 
 [wireframe]: ./images/readMeImages/wireframe.png

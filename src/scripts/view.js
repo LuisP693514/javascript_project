@@ -1,9 +1,8 @@
 console.log("I'm in the view file")
 
 class View {
-    constructor(canvas){
+    constructor() {
 
-        this.canvas = canvas
     }
 }
 

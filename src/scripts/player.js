@@ -1,6 +1,9 @@
+const MovingObj = require("./movingObj.js")
+
+
 console.log("I'm in the player file")
 
-class Player {
+class Player extends MovingObj {
     constructor(){
 
     }
