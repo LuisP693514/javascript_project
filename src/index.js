@@ -6,7 +6,7 @@ const Enemy = require("./scripts/enemy.js");
 document.addEventListener("DOMContentLoaded", () => {
     const canvasEl = document.getElementById("canvas1")
     const canDiv = document.getElementById("canvasdiv")
-    canvasEl.style = "display: block; position: absolute; left: 0; top: 0; z-index: 0;"
+    canvasEl.style = "display: block; position: absolute; margin: auto; left: 0; top: 0; z-index: 0;"
 
     canvasEl.width = 1280;
     canvasEl.height = 720;
@@ -15,10 +15,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const bgz1 = new Image(canvasXSize, canvasYSize);
     const bgz2 = new Image(canvasXSize, canvasYSize);
-
+    const plImg = new Image(canvasXSize, canvasYSize);
+    
     bgz1.src = "./images/Clouds/Clouds5/3.png"
     bgz2.src = "./images/Clouds/Clouds5/4.png"
+    plImg.src = "./images/sprites/holloweenSprites/Objects/Ghost2.png"
+    const playerOptions = {}
     
+    plImg.onload = () => {
+        playerOptions.sprite = createImageBitmap(plImg, 0,0,34,38, {resizeHeight: 12, resizeWidth: 12}).then((result) => update())
+    }
 
     const speed = 5; // lower is faster
     const scale = 1.05;
@@ -26,8 +32,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Main program
     const dx = 1;
-    let imgW;
-    let imgH;
+    let imgW; //width
+    let imgH; //height
     let x = 0;
     let clearX;
     let clearY;
@@ -122,7 +128,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     console.log("hello world")
 
-    const pl = new Player({ radius: 12 })
+    const pl = new Player(playerOptions)
+    
 
     document.addEventListener("keydown", (e) => {
         console.log(e);
@@ -159,10 +166,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.code === 'KeyS') pdyd = 5;
         if (e.code === 'KeyA') pdxl = -5;
         if (e.code === 'KeyW') pdyu = -5;
-
     })
 
-    document.addEventListener("keyup", (e)=>{
+    document.addEventListener("keyup", (e) => {
         if (e.code === 'KeyD') pdxr = 0;
         if (e.code === 'KeyS') pdyd = 0;
         if (e.code === 'KeyA') pdxl = 0;
@@ -176,17 +182,14 @@ document.addEventListener("DOMContentLoaded", () => {
         px += pdxr;
         py += pdyu;
         py += pdyd;
+
+        console.log(typeof playerOptions.sprite)
     
-        ctxGame.beginPath();
-        ctxGame.arc(px,py,20,0,Math.PI*2, true)
-        ctxGame.fill();
-        ctxGame.closePath();
+        ctx.drawImage(playerOptions.sprite, 50, 50);
     
         requestAnimationFrame(update)
     }
-    update()
-
-
+    
 });
 
 
