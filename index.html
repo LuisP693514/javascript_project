@@ -5,10 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./dist/main.css" rel="stylesheet" ></link>
-    <script src="./dist/main.js"></script>
     <title>title</title>
 </head>
-<body>
+<body >
     <header>
         <nav id="navBar">
         <div id="title"> Game Title </div>
@@ -17,32 +16,11 @@
             </ul>
         </nav>
     </header>
-    <div id="controlsDiv">
-        <h4> Default Controls: </h4>
-        <ul>
-            <ul id="defaultMovement"> 
-                <li>Movement:</li>
-                <li id="upLI">Up: <p class="movement_p">W</p></li>
-                <li id="downLI">Down: <p class="movement_p">S</p></li>
-                <li id="leftLI">Left: <p class="movement_p">A</p></li>
-                <li id="rightLI">Right: <p class="movement_p">D</p></li>
-            </ul>
-            <ul id="defaultAbilities">
-                <li>Abilities:</li>
-                <li>Bomb: Space Bar 
-                    <p> Destroys everything on screen except bosses </p>
-                </li>
-                <li>Shoot: Automatic 
-                    <p>Just point the mouse in the direction in which you want to shoot</p>
-                </li>
-                <li>Slow Down: N
-                    <p> Slow down your own movement</p>
-                </li>
-            </ul>
-        </ul>
-    </div>
     <div id="canvasdiv">
-        <canvas id="canvas1"></canvas>
+        <canvas id="backGround"></canvas>
+        <canvas id="contents"></canvas>
+        <canvas id="HUD"></canvas>
     </div>
+    <script src="./dist/main.js"></script>
 </body>
 </html>
