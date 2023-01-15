@@ -1,20 +1,20 @@
 class Bullet {
-    constructor(x, y, speed, dmg, options) {
+    constructor(x, y, speed, dmg, options = {}) {
         this.x = x;
         this.y = y;
         this.damage = dmg;
         this.speed = speed;
-
-        this.strokeColor = "white" || options.strokeColor;
-        this.color = "black" || options.color;
-        this.radius = 4 || options.radius;
+        
+        this.strokeColor = options.strokeColor || "white";
+        this.color = options.color || "black";
+        this.radius = options.radius || 4;
     }
 
-    isCollidingWith(sprite) {
+    isCollidingWith(sprite = {}) {
         if (this.x + this.radius <= sprite.width + sprite.x &&
-            this.x + (Math.floor(this.raidus / 2)) >= sprite.x &&
+            this.x + (Math.floor(this.radius / 2)) >= sprite.x &&
             this.y + this.radius <= sprite.y + sprite.height &&
-            this.y + (Math.floor(this.raidus / 2)) >= sprite.y) {
+            this.y + (Math.floor(this.radius / 2)) >= sprite.y) {
             return true;
         }
 

@@ -45,19 +45,43 @@ hudCtx.scale(dpr, dpr);
 hud.style.width = `${rect.width}px`;
 hud.style.height = `${rect.height}px`;
 
-// Customize shadows for gameplay layer
-fieldCtx.shadowColor = "green";
-fieldCtx.shadowBlur = 30;
-
 //Creating new instances for the game
 const plBC = new BulletController(field); // field layer is where the game takes place
 const player = new Player(rect.width / 2, rect.height / 2, plBC, { strokeColor: "green" })
 
+// Waves keep the game going!
+let wave = 0;
+const enemies = [];
+
+// Create waves
+// function generateWave(){
+//     wave++;
+//     let rows = wave * 2;
+//     for (let i = 0; i < rows; i++) {
+//        enemies.push(new Enemy(50 + i* 50, ))
+        
+//     }
+// }
+
+// The gameplay loop starts here
 function play() {
+    defaultStyle();
     fieldCtx.clearRect(0, 0, field.width, field.height)
     plBC.draw(fieldCtx);
+    // enemies.forEach(enemy => {
+    //     if(enemy.health > 0){
+    //         enemy.draw()
+    //     }
+    // });
     player.draw(fieldCtx);
 }
 
+//
+
+// Customize styles for gameplay layer
+function defaultStyle() {
+    fieldCtx.shadowColor = "blue";
+    fieldCtx.shadowBlur = 30;
+}
 setInterval(play, 1000 / 60);
 

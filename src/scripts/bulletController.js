@@ -4,9 +4,7 @@ class BulletController {
     bullets = [];
     timeTillNextShot = 0;
 
-    constructor(canvas) {
-        this.canvas = canvas;
-    };
+    constructor() {};
 
     shoot(x, y, speed, dmg, delay) {
         if (this.timeTillNextShot <= 0) {
@@ -21,12 +19,26 @@ class BulletController {
             if (this.isBulletOffScreen(bullet)) {
                 this.bullets.splice(this.bullets.indexOf(bullet), 1);
             }
-            bullet.draw(ctx)
+            bullet.draw(ctx);
         });
     }
 
     isBulletOffScreen(b) {
-        return b.y <= -b.radius * 2;
+        return (b.y <= -b.radius * 2 ||
+        b.x <= -b.radius * 2 ||
+        b.y >= 720 + b.radius * 2 ||
+        b.x >= 1280 + b.radius * 2);
+    }
+
+    collidesWith(sprite) {
+        this.bullets.forEach(bullet => {
+            if(bullet.isCollidingWith(sprite)){
+                sprite.takeDamage(bullet.damage);
+                return true;
+            } else {
+                return false
+            }
+        });
     }
 }
 
