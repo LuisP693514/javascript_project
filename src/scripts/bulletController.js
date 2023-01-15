@@ -6,9 +6,9 @@ class BulletController {
 
     constructor() {};
 
-    shoot(x, y, speed, dmg, delay) {
+    shoot(x, y, speed, dmg, delay, options = {}) {
         if (this.timeTillNextShot <= 0) {
-            this.bullets.push(new Bullet(x, y, speed, dmg));
+            this.bullets.push(new Bullet(x, y, speed, dmg, options));
             this.timeTillNextShot = delay;
         }
         this.timeTillNextShot--;

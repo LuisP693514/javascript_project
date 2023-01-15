@@ -47,7 +47,12 @@ hud.style.height = `${rect.height}px`;
 
 //Creating new instances for the game
 const plBC = new BulletController(field); // field layer is where the game takes place
-const player = new Player(rect.width / 2, rect.height / 2, plBC, { strokeColor: "green" })
+const player = new Player(rect.width / 2,
+    rect.height / 2, plBC,
+    {
+        strokeColor: "green",
+        canvas: field
+    })
 
 // Waves keep the game going!
 let wave = 0;
@@ -59,7 +64,7 @@ const enemies = [];
 //     let rows = wave * 2;
 //     for (let i = 0; i < rows; i++) {
 //        enemies.push(new Enemy(50 + i* 50, ))
-        
+
 //     }
 // }
 
