@@ -17,6 +17,6 @@ The user spawns into the map
 
 Background images used are from craftpix.net: https://craftpix.net/file-licenses/
 
-Github icon from google images.
+Sound effects used are from mixkit.co: https://mixkit.co/license/#sfxFree
 
 [wireframe]: ./images/readMeImages/wireframe.png

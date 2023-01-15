@@ -12,21 +12,23 @@ class Player {
         this.canvas = options.canvas
         this.strokeColor = options.strokeColor || "white";
         this.speed = 8;
-        this.width = 50;
-        this.height = 50;
+        this.width = 20;
+        this.height = 20;
         this.health = 5;
         this.dodgeTimes = 1;
+        this.shootSound = new Audio("./sounds/shoot.wav")
+        this.shootSound.volume = 0.01;
 
         this.upgrades = options.upgrades || {};
-        
+
         addEventListener("keydown", this.keyDown)
         addEventListener("keyup", this.keyUp)
         addEventListener("mousedown", this.mouseDown)
         addEventListener("mouseup", this.mouseUp)
         addEventListener("mousemove", this.mouseMove) // Stops mouse click from highlighting text
-        
+
     }
-     // Dodge Mechanic
+    // Dodge Mechanic
     dodge() {
         if (this.canDodge() && !this.dodgeOnCD) {
             if (this.dodgePressed) {
@@ -60,8 +62,17 @@ class Player {
             const bulletSpeed = 16;
             const delay = 7;
             let vector = [this.mouseXV, this.mouseYV];
-            console.log("shoot!" + vector)
-            this.bulletController.shoot(bulletX, bulletY, bulletSpeed, bulletDmg, delay, { vector: vector, color: this.upgrades.color || "#00AAD3" });
+            this.bulletController.shoot(
+                bulletX,
+                bulletY,
+                bulletSpeed,
+                bulletDmg,
+                delay,
+                {
+                    vector: vector,
+                    color: this.upgrades.color || "#00AAD3",
+                    shootSoundEff: this.shootSound
+                });
         }
     }
 
@@ -137,7 +148,6 @@ class Player {
     keyDown = (k) => {
         // console.log(k.code)
         k.preventDefault();
-        console.log(k)
         if (k.code === "KeyW") this.upPressed = true;
         if (k.code === "KeyD") this.rightPressed = true;
         if (k.code === "KeyA") this.leftPressed = true;
@@ -164,7 +174,7 @@ class Player {
             this.timeTillNextDamage = this.iFrames;
         }
     }
-    _updateMouse(){
+    _updateMouse() {
         const rect = this.canvas.getBoundingClientRect();
         this.mouseX = this.mouseXloc - rect.left - this.x - this.width / 2;
         this.mouseY = this.mouseYloc - rect.top - this.y - this.height / 2;

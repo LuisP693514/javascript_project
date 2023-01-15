@@ -4,12 +4,19 @@ class BulletController {
     bullets = [];
     timeTillNextShot = 0;
 
-    constructor() {};
+    constructor(options= {}) {
+
+    };
 
     shoot(x, y, speed, dmg, delay, options = {}) {
         if (this.timeTillNextShot <= 0) {
             this.bullets.push(new Bullet(x, y, speed, dmg, options));
             this.timeTillNextShot = delay;
+            if (options.shootSoundEff) {
+                const sound = options.shootSoundEff
+                sound.currentTime= 0;
+                sound.play()
+            };
         }
         this.timeTillNextShot--;
     }
@@ -34,6 +41,7 @@ class BulletController {
         this.bullets.forEach(bullet => {
             if(bullet.isCollidingWith(sprite)){
                 sprite.takeDamage(bullet.damage);
+                this.bullets.splice(this.bullets.indexOf(bullet), 1);
                 return true;
             } else {
                 return false

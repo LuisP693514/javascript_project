@@ -57,7 +57,13 @@ const player = new Player(rect.width / 2,
 // Waves keep the game going!
 let wave = 0;
 const enemies = [];
-
+const possibleSpawnLocations = [
+    [],
+    [],
+    [],
+    [],
+    []
+]
 // Create waves
 // function generateWave(){
 //     wave++;
@@ -68,6 +74,7 @@ const enemies = [];
 //     }
 // }
 
+let enemy = new Enemy(50, 50 , 20, 10)
 // The gameplay loop starts here
 function play() {
     defaultStyle();
@@ -78,6 +85,12 @@ function play() {
     //         enemy.draw()
     //     }
     // });
+    if (enemy.health> 0){ 
+        plBC.collidesWith(enemy);
+        enemy.draw(fieldCtx);
+    } else {
+
+    }
     player.draw(fieldCtx);
 }
 
