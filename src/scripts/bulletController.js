@@ -4,9 +4,11 @@ class BulletController {
     bullets = [];
     timeTillNextShot = 0;
 
-    constructor(options= {}) {
+    constructor(options = {}) {
 
     };
+
+
 
     shoot(x, y, speed, dmg, delay, options = {}) {
         if (this.timeTillNextShot <= 0) {
@@ -14,7 +16,7 @@ class BulletController {
             this.timeTillNextShot = delay;
             if (options.shootSoundEff) {
                 const sound = options.shootSoundEff
-                sound.currentTime= 0;
+                sound.currentTime = 0;
                 sound.play()
             };
         }
@@ -32,14 +34,14 @@ class BulletController {
 
     isBulletOffScreen(b) {
         return (b.y <= -b.radius * 2 ||
-        b.x <= -b.radius * 2 ||
-        b.y >= 720 + b.radius * 2 ||
-        b.x >= 1280 + b.radius * 2);
+            b.x <= -b.radius * 2 ||
+            b.y >= 720 + b.radius * 2 ||
+            b.x >= 1280 + b.radius * 2);
     }
 
     collidesWith(sprite) {
         this.bullets.forEach(bullet => {
-            if(bullet.isCollidingWith(sprite)){
+            if (bullet.isCollidingWith(sprite)) {
                 sprite.takeDamage(bullet.damage);
                 this.bullets.splice(this.bullets.indexOf(bullet), 1);
                 return true;

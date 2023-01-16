@@ -1,6 +1,7 @@
 const Player = require("./scripts/player.js");
 const Enemy = require("./scripts/enemy.js");
 const BulletController = require("./scripts/bulletController.js");
+const EnemyController = require("./scripts/enemyController.js");
 
 // Grabbing the canvas elements
 const field = document.getElementById("contents");
@@ -47,6 +48,7 @@ hud.style.height = `${rect.height}px`;
 
 //Creating new instances for the game
 const plBC = new BulletController(field); // field layer is where the game takes place
+const enemyController = new EnemyController(field);
 const player = new Player(rect.width / 2,
     rect.height / 2, plBC,
     {
@@ -56,14 +58,7 @@ const player = new Player(rect.width / 2,
 
 // Waves keep the game going!
 let wave = 0;
-const enemies = [];
-const possibleSpawnLocations = [
-    [],
-    [],
-    [],
-    [],
-    []
-]
+
 // Create waves
 // function generateWave(){
 //     wave++;
@@ -74,7 +69,7 @@ const possibleSpawnLocations = [
 //     }
 // }
 
-let enemy = new Enemy(50, 50 , 20, 10)
+let enemy = new Enemy(100, 100, null)
 // The gameplay loop starts here
 function play() {
     defaultStyle();
@@ -85,13 +80,18 @@ function play() {
     //         enemy.draw()
     //     }
     // });
-    if (enemy.health> 0){ 
+    if (enemy.health > 0) {
         plBC.collidesWith(enemy);
         enemy.draw(fieldCtx);
     } else {
-
+        enemy = {}
     }
-    player.draw(fieldCtx);
+
+    if (player.health > 0) {
+        player.draw(fieldCtx);
+    } else {
+        gameOver();
+    }
 }
 
 //
@@ -101,5 +101,9 @@ function defaultStyle() {
     fieldCtx.shadowColor = "blue";
     fieldCtx.shadowBlur = 30;
 }
-setInterval(play, 1000 / 60);
+const gameLoop = setInterval(play, 1000 / 60);
+
+function gameOver() {
+
+}
 

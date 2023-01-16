@@ -3,31 +3,49 @@ class Player {
     iFrames = 20; // 20 frames of invincibility after taking damage
     dodgeFrames = 10; // more frames = more POWER!!!
     dodgeCd = 2000; // CD on dodge mechanic
-    
+
     constructor(x, y, bc, options = {}) {
+        // Must have
         this.y = y;
         this.x = x;
         this.bulletController = bc;
-        
-        this.canvas = options.canvas
+
+        // Defaults
+        this.muted = options.muted;
+        this.canvas = options.canvas;
         this.strokeColor = options.strokeColor || "white";
-        this.speed = 8;
-        this.width = 20;
-        this.height = 20;
-        this.health = 5;
-        this.dodgeTimes = 1;
         this.shootSound = new Audio("./sounds/shoot.wav")
-        this.shootSound.volume = 0.01;
+        this.shootSound.volume = 0.001;
+        this.dodgeTimes = 1;
+        this.height = 20;
+        this.width = 20;
+        this.bulletVelocity = 0.3;
 
-        this.upgrades = options.upgrades || {};
+        // Upgradeable: 
+        this.speed = 8;
+        this.health = 5;
+        this.bulletDmg = 1;
+        this.bulletDelay = 4;
+        this.bulletSpeed = 20;
 
+        // Inputs from player
         addEventListener("keydown", this.keyDown)
         addEventListener("keyup", this.keyUp)
         addEventListener("mousedown", this.mouseDown)
         addEventListener("mouseup", this.mouseUp)
-        addEventListener("mousemove", this.mouseMove) // Stops mouse click from highlighting text
+        addEventListener("mousemove", this.mouseMove)
 
     }
+
+    // Upgrade the player to make them stronger
+    upgrade(options = {}) {
+        this.speed += options.speed || 0;
+        this.health += options.health || 0;
+        this.bulletDmg += options.bulletDmg || 0;
+        this.bulletDelay += options.bulletDelay || 0;
+        this.bulletSpeed += options.bulletSpeed || 0;
+    }
+
     // Dodge Mechanic
     dodge() {
         if (this.canDodge() && !this.dodgeOnCD) {
@@ -58,9 +76,9 @@ class Player {
             // Create a bullet if mouse is clicked
             const bulletX = this.x + Math.floor(this.width / 2)
             const bulletY = this.y + Math.floor(this.height / 2)
-            const bulletDmg = 1;
-            const bulletSpeed = 16;
-            const delay = 7;
+            const bulletDmg = this.bulletDmg;
+            const bulletSpeed = this.bulletSpeed;
+            const delay = this.bulletDelay;
             let vector = [this.mouseXV, this.mouseYV];
             this.bulletController.shoot(
                 bulletX,
@@ -70,26 +88,40 @@ class Player {
                 delay,
                 {
                     vector: vector,
-                    color: this.upgrades.color || "#00AAD3",
-                    shootSoundEff: this.shootSound
+                    color: this.color || "#00AAD3",
+                    shootSoundEff: this.shootSound,
+                    bulletVelocity: this.bulletVelocity
                 });
         }
     }
 
     // Draw the player onto the 2d plane
     draw(ctx) {
+        if (this.damagedState ^ this.blink) {
+            this._draw(ctx);
+        }
         this.move();
+        this.shoot();
+        this.dodge();
+        if (this.timeTillNextDamage > 0) {
+            this.timeTillNextDamage--;
+            this._blink();
+        } else {
+            this.damagedState = false;
+            this.blink = true;
+        }
+    }
+
+    _blink() {
+        this.blink = this.blink ? false : true;
+    }
+    _draw(ctx) {
         ctx.shadowColor = "green";
         ctx.shadowBlur = 30;
         ctx.strokeStyle = this.strokeColor;
         ctx.strokeRect(this.x, this.y, this.width, this.height)
         ctx.fillStyle = "white";
         ctx.fillRect(this.x, this.y, this.width, this.height);
-        this.shoot();
-        this.dodge();
-        if (this.timeTillNextDamage > 0) {
-            this.timeTillNextDamage--;
-        }
     }
 
     // Move the player but not off-screen
@@ -171,6 +203,7 @@ class Player {
     takeDamage(num) {
         if (this.timeTillNextDamage < 1) {
             this.health -= num;
+            this.damageState = true;
             this.timeTillNextDamage = this.iFrames;
         }
     }

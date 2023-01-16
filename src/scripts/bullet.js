@@ -4,6 +4,7 @@ class Bullet {
         this.y = y;
         this.damage = dmg;
         this.speed = speed;
+        this.velocity = options.bulletVelocity || 0;
 
         this.strokeColor = options.strokeColor || "white";
         this.color = options.color || "black";
@@ -25,8 +26,9 @@ class Bullet {
     draw(ctx) {
         ctx.strokeStyle = this.strokeColor
         ctx.fillStyle = this.color
-        this.x += (this.vector[0] * this.speed)
-        this.y += (this.vector[1] * this.speed); // somehow implement vectors
+        this.speed += this.velocity;
+        this.x += (this.vector[0] * this.speed);
+        this.y += (this.vector[1] * this.speed); 
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true)
         ctx.closePath();
