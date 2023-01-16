@@ -3,22 +3,91 @@ let bulletsParams = {
         x: 0,
         y: 0,
         damage: 1,
-        speed: 2,
-        velocity: 0,
+        speed: 25,
+        velocity: -2,
         vector: [-1, 0],
         theta: 0,
-        radius: 4
+        radius: 4,
+        color: "red"
     },
     1: {
         x: 0,
         y: 0,
-        speed: 2,
+        speed: 25,
         damage: 1,
-        velocity: 0,
+        velocity: -2,
         vector: [1, 0],
         theta: 0,
-        radius: 4
-    }
+        radius: 4,
+        color: "red"
+    },
+    2: {
+        x: 0,
+        y: 0,
+        speed: 25,
+        damage: 1,
+        velocity: -1,
+        vector: [0, 1],
+        theta: 0,
+        radius: 4,
+        color: "red"
+    },
+    3: {
+        x: 0,
+        y: 0,
+        speed: 25,
+        damage: 1,
+        velocity: -1,
+        vector: [0, -1],
+        theta: 0,
+        radius: 4,
+        color: "red"
+    },
+    4: {
+        x: 0,
+        y: 0,
+        speed: 25,
+        damage: 1,
+        velocity: -2,
+        vector: [-1, -1],
+        theta: 0,
+        radius: 4,
+        color: "red",
+    },
+    5: {
+        x: 0,
+        y: 0,
+        speed: 25,
+        damage: 1,
+        velocity: -2,
+        vector: [1, 1],
+        theta: 0,
+        radius: 4,
+        color: "red",
+    },
+    6: {
+        x: 0,
+        y: 0,
+        speed: 25,
+        damage: 1,
+        velocity: -1,
+        vector: [1, -1],
+        theta: 0,
+        radius: 4,
+        color: "red",
+    },
+    7: {
+        x: 0,
+        y: 0,
+        speed: 25,
+        damage: 1,
+        velocity: -1,
+        vector: [-1, 1],
+        theta: 0,
+        radius: 4,
+        color: "red",
+    },
+
 }
 
 module.exports = bulletsParams;

@@ -28,7 +28,7 @@ class Enemy {
         this.vector = options.vector || [0, 0];
         this.muted = options.muted
         
-        this.originalSpeed = options.speed || 2;
+        this.originalSpeed = options.speed || 15;
         this.speed = this.originalSpeed;
         this.height = this.radius * 2;
         this.width = this.radius * 2;
@@ -131,7 +131,6 @@ class Enemy {
 
     takeDamage(num) {
         this.health -= num;
-        console.log(this.health);
         if (this.health <= 0) {
             this.deathSound.currentTime = 0;
             this.deathSound.play();

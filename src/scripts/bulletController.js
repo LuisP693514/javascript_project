@@ -10,7 +10,6 @@ class BulletController {
 
     shoot(x,y,options = {}) {
         if (this.timeTillNextShot <= 0) {
-            if(options.bullets) console.log(options.bullets);
             const bullets = options.bullets || [new Bullet(x,y,options)]
             this.bullets.push(...bullets);
             this.timeTillNextShot = options.delay;

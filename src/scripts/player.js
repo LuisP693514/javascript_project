@@ -50,10 +50,9 @@ class Player {
 
     // Dodge Mechanic
     dodge() {
-        if (this.canDodge() && !this.dodgeOnCD) {
-            if (this.dodgePressed) {
-                this._dodge();
-            }
+        if (this.canDodge() && !this.dodgeOnCD && this.dodgePressed) {
+            this._dodge();
+            this.collideAble = false;
         }
     }
     canDodge() {
@@ -65,10 +64,12 @@ class Player {
         this.dodgeOnCD = true;
         setTimeout(() => {
             this.speed /= 2;
+            this.collideAble = true;
         }, 1000 / 60 * this.dodgeFrames);
         setTimeout(() => {
             this.dodgeOnCD = false;
             this.dodgeTimes++;
+            this.dodgePressed = false;
         }, this.dodgeCd);
     }
 
@@ -86,7 +87,6 @@ class Player {
                 bulletX,
                 bulletY,
                 {
-
                     speed: bulletSpeed,
                     damage: bulletDmg,
                     delay: delay,
@@ -98,7 +98,6 @@ class Player {
                 });
         }
     }
-
     // Draw the player onto the 2d plane
     draw(ctx) {
         if (this.damagedState ^ this.blink) {
@@ -113,7 +112,6 @@ class Player {
         } else {
             this.damagedState = false;
             this.blink = true;
-            this.collideAble = true;
         }
     }
 
@@ -127,6 +125,17 @@ class Player {
         ctx.strokeRect(this.x, this.y, this.width, this.height)
         ctx.fillStyle = "white";
         ctx.fillRect(this.x, this.y, this.width, this.height);
+    }
+    takeDamage(num) {
+        if (this.timeTillNextDamage < 1) {
+            this.collideAble = false;
+            setTimeout(() => {
+                this.collideAble = true;
+            }, 1000/60 * this.iFrames);
+            this.health -= num;
+            this.damageState = true;
+            this.timeTillNextDamage = this.iFrames;
+        }
     }
 
     // Move the player but not off-screen
@@ -172,14 +181,14 @@ class Player {
             this.shootPressed = true;
             this._updateMouse()
         }
-        if (k.button === 2) {
-            this.dodgePressed = true;
-        }
+        // if (k.button === 2) {
+        //     this.dodgePressed = true;
+        // }
     }
     mouseUp = (k) => {
         if (k.button === 0) this.shootPressed = false;
         if (k.button === 2) {
-            this.dodgePressed = false;
+            this.dodgePressed = true;
         }
     }
     keyDown = (k) => {
@@ -204,14 +213,6 @@ class Player {
         if (k.code === "ShiftLeft") this.speed = this.oldSpeed;
         if (k.code === "Space") this.spacePressed = false;
         if (k.code === "KeyJ") this.shootPressed = false;
-    }
-    takeDamage(num) {
-        if (this.timeTillNextDamage < 1) {
-            this.collideAble = false;
-            this.health -= num;
-            this.damageState = true;
-            this.timeTillNextDamage = this.iFrames;
-        }
     }
     _updateMouse() {
         const rect = this.canvas.getBoundingClientRect();
