@@ -68,8 +68,8 @@ let wave = 0;
 
 //     }
 // }
-
-let enemy = new Enemy(100, 100, null)
+const enBc = new BulletController()
+let enemy = new Enemy(100, 100, enBc)
 // The gameplay loop starts here
 function play() {
     defaultStyle();
@@ -80,6 +80,7 @@ function play() {
     //         enemy.draw()
     //     }
     // });
+    enBc.draw(fieldCtx)
     if (enemy.health > 0) {
         plBC.collidesWith(enemy);
         enemy.draw(fieldCtx);
@@ -88,6 +89,7 @@ function play() {
     }
 
     if (player.health > 0) {
+        enBc.collidesWith(player);
         player.draw(fieldCtx);
     } else {
         gameOver();
@@ -104,6 +106,7 @@ function defaultStyle() {
 const gameLoop = setInterval(play, 1000 / 60);
 
 function gameOver() {
-
+    clearInterval(gameLoop)
+    setTimeout(gameLoop, 3000)
 }
 

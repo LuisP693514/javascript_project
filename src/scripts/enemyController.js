@@ -7,7 +7,14 @@ class EnemyController {
     }
 
     draw(ctx){
-        
+        this.enemies.forEach(enemy => {
+            if (enemy.health > 0) {
+                enemy.draw(ctx)
+            } else {
+                this.enemies.splice(this.enemies.indexOf(enemy), 1);
+                console.log("lol he died")
+            }
+        });
     }
 
     createEnemies(wave, options = {}){

@@ -8,12 +8,12 @@ class BulletController {
 
     };
 
-
-
-    shoot(x, y, speed, dmg, delay, options = {}) {
+    shoot(x,y,options = {}) {
         if (this.timeTillNextShot <= 0) {
-            this.bullets.push(new Bullet(x, y, speed, dmg, options));
-            this.timeTillNextShot = delay;
+            if(options.bullets) console.log(options.bullets);
+            const bullets = options.bullets || [new Bullet(x,y,options)]
+            this.bullets.push(...bullets);
+            this.timeTillNextShot = options.delay;
             if (options.shootSoundEff) {
                 const sound = options.shootSoundEff
                 sound.currentTime = 0;
@@ -41,7 +41,7 @@ class BulletController {
 
     collidesWith(sprite) {
         this.bullets.forEach(bullet => {
-            if (bullet.isCollidingWith(sprite)) {
+            if (bullet.isCollidingWith(sprite) && sprite.collideAble) {
                 sprite.takeDamage(bullet.damage);
                 this.bullets.splice(this.bullets.indexOf(bullet), 1);
                 return true;

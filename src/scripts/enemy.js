@@ -1,3 +1,6 @@
+const Bullet = require("./bullet.js");
+const bulletsParams = require("./bulletsParams.js")
+
 class Enemy {
 
     spots = [
@@ -13,7 +16,6 @@ class Enemy {
         new Image(),
     ]
 
-
     constructor(x, y, bc, options = {}) {
         this.x = x;
         this.y = y;
@@ -25,8 +27,8 @@ class Enemy {
         this.color = options.color || "red";
         this.vector = options.vector || [0, 0];
         this.muted = options.muted
-
-        this.originalSpeed = options.speed || 25;
+        
+        this.originalSpeed = options.speed || 2;
         this.speed = this.originalSpeed;
         this.height = this.radius * 2;
         this.width = this.radius * 2;
@@ -34,9 +36,25 @@ class Enemy {
         this.deathSound.volume = 0.07;
         this.loopLoc = 0;
         this.frame = 0;
+        this.bullets = []
+        this.collideAble = true;
         this.updateImages()
     }
 
+    shoot() {
+        this._addBullets()
+        this.bulletController.shoot(null, null, {
+            bullets: this.bullets.splice(0),
+            delay: 20,
+        })
+
+    }
+    _addBullets(){
+        for (let i = 0; i < Object.keys(bulletsParams).length; i++) {
+            const params = bulletsParams[i];
+            this.bullets.push(new Bullet(this.x, this.y, params));
+        }
+    }
     updateImages() {
         this.images.forEach((image, imageIdx) => {
             image.width = this.radius * 2;
@@ -46,7 +64,7 @@ class Enemy {
     }
     draw(ctx) {
         if (this.frame >= this.images.length) this.frame = 0;
-
+        this.shoot()
         this.movementLoop();
         ctx.shadowColor = this.color;
         ctx.shadowBlur = 30;
@@ -85,7 +103,6 @@ class Enemy {
     }
 
     _moveTo(num) {
-        console.log(num)
         let xDif = this.spots[num][0] - this.x;
         let yDif = this.spots[num][1] - this.y;
         let divisor = Math.max(Math.abs(xDif), Math.abs(yDif));

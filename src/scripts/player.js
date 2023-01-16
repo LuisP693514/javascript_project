@@ -1,7 +1,7 @@
 class Player {
 
-    iFrames = 20; // 20 frames of invincibility after taking damage
-    dodgeFrames = 10; // more frames = more POWER!!!
+    iFrames = 100; // 20 frames of invincibility after taking damage
+    dodgeFrames = 15; // more frames = more POWER!!!
     dodgeCd = 2000; // CD on dodge mechanic
 
     constructor(x, y, bc, options = {}) {
@@ -20,6 +20,8 @@ class Player {
         this.height = 20;
         this.width = 20;
         this.bulletVelocity = 0.3;
+        this.timeTillNextDamage = 0;
+        this.collideAble = true;
 
         // Upgradeable: 
         this.speed = 8;
@@ -83,14 +85,16 @@ class Player {
             this.bulletController.shoot(
                 bulletX,
                 bulletY,
-                bulletSpeed,
-                bulletDmg,
-                delay,
                 {
+
+                    speed: bulletSpeed,
+                    damage: bulletDmg,
+                    delay: delay,
                     vector: vector,
                     color: this.color || "#00AAD3",
                     shootSoundEff: this.shootSound,
                     bulletVelocity: this.bulletVelocity
+
                 });
         }
     }
@@ -109,6 +113,7 @@ class Player {
         } else {
             this.damagedState = false;
             this.blink = true;
+            this.collideAble = true;
         }
     }
 
@@ -202,6 +207,7 @@ class Player {
     }
     takeDamage(num) {
         if (this.timeTillNextDamage < 1) {
+            this.collideAble = false;
             this.health -= num;
             this.damageState = true;
             this.timeTillNextDamage = this.iFrames;

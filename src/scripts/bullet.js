@@ -1,11 +1,11 @@
 class Bullet {
-    constructor(x, y, speed, dmg, options = {}) {
+    constructor(x, y, options = {}) {
         this.x = x;
         this.y = y;
-        this.damage = dmg;
-        this.speed = speed;
-        this.velocity = options.bulletVelocity || 0;
-
+        this.damage = options.damage;
+        this.speed = options.speed;
+        
+        this.velocity = options.velocity || 0;
         this.strokeColor = options.strokeColor || "white";
         this.color = options.color || "black";
         this.radius = options.radius || 5;
@@ -13,10 +13,10 @@ class Bullet {
     }
 
     isCollidingWith(sprite = {}) {
-        if (this.x + this.radius <= sprite.width + sprite.x &&
-            this.x + (Math.floor(this.radius / 2)) >= sprite.x &&
-            this.y + this.radius <= sprite.y + sprite.height &&
-            this.y + (Math.floor(this.radius / 2)) >= sprite.y) {
+        if (this.x  <= sprite.width + sprite.x &&
+            this.x  >= sprite.x &&
+            this.y  <= sprite.y + sprite.height &&
+            this.y  >= sprite.y) {
             return true;
         }
 
