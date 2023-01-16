@@ -69,12 +69,14 @@ let wave = 0;
 //     }
 // }
 const enemies = []
+const enemiesGuns = [];
 const enBc = new BulletController()
 const enBc2 = new BulletController()
 let enemy = new Enemy(50, 50, enBc)
 let enemy2 = new Enemy(1230, 670, enBc2)
 enemy2.loopLoc = 2;
 enemies.push(enemy, enemy2)
+enemiesGuns.push(enBc, enBc2)
 
 // The gameplay loop starts here
 function play() {
@@ -82,16 +84,18 @@ function play() {
     fieldCtx.clearRect(0, 0, field.width, field.height)
     plBC.draw(fieldCtx);
     enemies.forEach(enemy => {
-        if(enemy.health > 0){
+        if (enemy.health > 0) {
             plBC.collidesWith(enemy)
             enemy.draw(fieldCtx)
-            enemy.bulletController.draw(fieldCtx)
-            enemy.bulletController.collidesWith(player)
         } else {
             enemies.splice(enemies.indexOf(enemy), 1);
-            enemy = null;
         }
     });
+    enemiesGuns.forEach(gun => {
+        gun.collidesWith(player)
+        gun.draw(fieldCtx)
+    })
+
     if (player.health > 0) {
         player.draw(fieldCtx);
     } else {

@@ -28,7 +28,7 @@ class Enemy {
         this.vector = options.vector || [0, 0];
         this.muted = options.muted
         
-        this.originalSpeed = options.speed || 15;
+        this.originalSpeed = options.speed || 4;
         this.speed = this.originalSpeed;
         this.height = this.radius * 2;
         this.width = this.radius * 2;
@@ -61,6 +61,7 @@ class Enemy {
             image.height = this.radius * 2;
             image.src = `./images/sprites/holloweenSprites/AnimatedObjects/Pumpkin2_${imageIdx + 1}.png`
         });
+        
     }
     draw(ctx) {
         if (this.frame >= this.images.length) this.frame = 0;
@@ -75,7 +76,7 @@ class Enemy {
             this.radius * 3,
             this.radius * 3
         )
-
+        this.frame ++;
         // ctx.fillStyle = this.color;
         // ctx.beginPath();
         // ctx.arc(this.x + this.radius, this.y + this.radius, this.radius, 0, 2 * Math.PI, true)
