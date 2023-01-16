@@ -68,28 +68,31 @@ let wave = 0;
 
 //     }
 // }
+const enemies = []
 const enBc = new BulletController()
-let enemy = new Enemy(100, 100, enBc)
+const enBc2 = new BulletController()
+let enemy = new Enemy(50, 50, enBc)
+let enemy2 = new Enemy(1230, 670, enBc2)
+enemy2.loopLoc = 2;
+enemies.push(enemy, enemy2)
+
 // The gameplay loop starts here
 function play() {
     defaultStyle();
     fieldCtx.clearRect(0, 0, field.width, field.height)
     plBC.draw(fieldCtx);
-    // enemies.forEach(enemy => {
-    //     if(enemy.health > 0){
-    //         enemy.draw()
-    //     }
-    // });
-    enBc.draw(fieldCtx)
-    if (enemy.health > 0) {
-        plBC.collidesWith(enemy);
-        enemy.draw(fieldCtx);
-    } else {
-        enemy = {}
-    }
-
+    enemies.forEach(enemy => {
+        if(enemy.health > 0){
+            plBC.collidesWith(enemy)
+            enemy.draw(fieldCtx)
+            enemy.bulletController.draw(fieldCtx)
+            enemy.bulletController.collidesWith(player)
+        } else {
+            enemies.splice(enemies.indexOf(enemy), 1);
+            enemy = null;
+        }
+    });
     if (player.health > 0) {
-        enBc.collidesWith(player);
         player.draw(fieldCtx);
     } else {
         gameOver();

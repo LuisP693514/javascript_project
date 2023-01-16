@@ -1,4 +1,4 @@
-let bulletsParams = {
+let bulletsPattern = {
     0: {
         x: 0,
         y: 0,
@@ -90,4 +90,4 @@ let bulletsParams = {
 
 }
 
-module.exports = bulletsParams;
+module.exports = bulletsPattern;

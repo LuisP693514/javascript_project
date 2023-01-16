@@ -1,5 +1,5 @@
 const Bullet = require("./bullet.js");
-const bulletsParams = require("./bulletsParams.js")
+const bulletsPattern = require("./bPatterns/bulletsPattern1.js")
 
 class Enemy {
 
@@ -45,13 +45,13 @@ class Enemy {
         this._addBullets()
         this.bulletController.shoot(null, null, {
             bullets: this.bullets.splice(0),
-            delay: 20,
+            delay: 4,
         })
 
     }
     _addBullets(){
-        for (let i = 0; i < Object.keys(bulletsParams).length; i++) {
-            const params = bulletsParams[i];
+        for (let i = 0; i < Object.keys(bulletsPattern).length; i++) {
+            const params = bulletsPattern[i];
             this.bullets.push(new Bullet(this.x, this.y, params));
         }
     }
