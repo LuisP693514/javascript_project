@@ -19,4 +19,6 @@ Background images used are from craftpix.net: https://craftpix.net/file-licenses
 
 Sound effects used are from mixkit.co: https://mixkit.co/license/#sfxFree
 
+Icon license: Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))
+
 [wireframe]: ./images/readMeImages/wireframe.png

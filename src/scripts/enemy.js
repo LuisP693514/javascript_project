@@ -21,14 +21,15 @@ class Enemy {
         this.y = y;
         this.bulletController = bc;
 
-        this.health = options.health || 10;
+        this.health = options.health || 100;
+        this.maxHp = this.health
         this.worth = options.worth || 100;
         this.radius = options.radius || 20;
         this.color = options.color || "red";
         this.vector = options.vector || [0, 0];
         this.muted = options.muted
         
-        this.originalSpeed = options.speed || 4;
+        this.originalSpeed = options.speed || 15;
         this.speed = this.originalSpeed;
         this.height = this.radius * 2;
         this.width = this.radius * 2;
@@ -71,12 +72,14 @@ class Enemy {
         ctx.shadowBlur = 30;
         ctx.drawImage(
             this.images[this.frame],
-            this.x - this.radius,
-            this.y - this.radius,
+            this.x - this.radius/2,
+            this.y - this.radius/1.5,
             this.radius * 3,
             this.radius * 3
         )
         this.frame ++;
+        // ctx.fillStyle = "red"
+        // ctx.fillRect(this.x,this.y,this.width,this.height)
         // ctx.fillStyle = this.color;
         // ctx.beginPath();
         // ctx.arc(this.x + this.radius, this.y + this.radius, this.radius, 0, 2 * Math.PI, true)
