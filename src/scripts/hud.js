@@ -168,11 +168,13 @@ class HUD {
     }
     //Scale any x input with the canvas size (1280x720)
     _scaleWidth(num) {
-        return this.canvas.width * num / 1280
+        // return this.canvas.width * num / 1280
+        return num
     }
     //Scale any y input with the canvas size (1280x720)
     _scaleHeight(num) {
-        return this.canvas.height * num / 720
+        // return this.canvas.height * num / 720
+        return num
     }
 }
 
