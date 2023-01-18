@@ -30,15 +30,16 @@ class HUD {
         this.ctx.font = "50px 'monospace'"
         this.ctx.textAlign = "center"
         this.ctx.fillText("Al Hollow's Bullets",
-            this.canvas.width / 2,
-            this.canvas.height / 9)
+            this._scaleWidth(640),
+            this._scaleHeight(80))
 
         // Click anywhere to start
         this.ctx.font = "22px 'monospace'"
         this.ctx.textAlign = "center"
         this.ctx.fillText("Click anywhere to start",
-            this.canvas.width / 2,
-            (this.canvas.height / 5) * 4.6)
+            this._scaleWidth(640),
+            this._scaleHeight(662.4)
+        )
 
         // WASD
         const keyGrad = this.ctx.createLinearGradient(0, 0, 0, this._scaleHeight(30))
@@ -151,7 +152,7 @@ class HUD {
         this.ctx.font = "24px 'monospace'"
         this.ctx.fillText("* The dodge mechanic triggers upon the release", this._scaleWidth(1010), this._scaleHeight(550))
         this.ctx.fillText("of either space bar or right-click", this._scaleWidth(1010), this._scaleHeight(580))
-        
+
         // Event listener to continue from title screen to the game
         this.canvas.addEventListener("mousedown", this._mouseDown)
 
