@@ -1,22 +1,20 @@
+const BulletController = require("./bulletController");
+const Squishy = require("./squish");
+
 class EnemyController {
     enemies = [];
 
-    constructor(canvas, bc, options = {}){
+    constructor(canvas, options = {}) {
         this.canvas = canvas;
-        this.bc = bc;
     }
 
-    draw(ctx){
+    draw(ctx) {
         this.enemies.forEach(enemy => {
-            if (enemy.health > 0) {
-                enemy.draw(ctx)
-            } else {
-                this.enemies.splice(this.enemies.indexOf(enemy), 1);
-            }
+            if (enemy.health > 0) enemy.draw(ctx);
         });
     }
 
-    createEnemies(wave, options = {}){
+    createEnemies(wave, options = {}) {
         switch (wave) {
             case 1:
                 this._generateWave1();
@@ -53,17 +51,46 @@ class EnemyController {
                 break;
         }
     }
-    _generateWave1 = () =>{}
-    _generateWave2 = () =>{}
-    _generateWave3 = () =>{}
-    _generateWave4 = () =>{}
-    _generateWave5 = () =>{}
-    _generateWave6 = () =>{}
-    _generateWave7 = () =>{}
-    _generateWave8 = () =>{}
-    _generateWave9 = () =>{}
-    _generateWave10 = () =>{}
-    _generateInfinite = () => {}
+    _generateWave1 = () => {
+        this.enemies.push(
+            new Squishy(1220, 20, new BulletController(),
+                {
+                    speed: 5,
+                    health: 2,
+                    spotX1: 20,
+                    spotY1: 20,
+                    spotX2: 20,
+                    spotY2: 660,
+                    hpMultiplier: 0.5,
+                    bulletDelay: 60
+
+                }
+            ),
+            new Squishy(20, 660, new BulletController(),
+                {
+                    speed: 5,
+                    health: 2,
+                    spotX1: 1220,
+                    spotY1: 660,
+                    spotX2: 1220,
+                    spotY2: 20,
+                    hpMultiplier: 0.5,
+                    bulletDelay: 60
+
+                }
+            )
+        )
+    }
+    _generateWave2 = () => { }
+    _generateWave3 = () => { }
+    _generateWave4 = () => { }
+    _generateWave5 = () => { }
+    _generateWave6 = () => { }
+    _generateWave7 = () => { }
+    _generateWave8 = () => { }
+    _generateWave9 = () => { }
+    _generateWave10 = () => { }
+    _generateInfinite = () => { }
 }
 
 module.exports = EnemyController;

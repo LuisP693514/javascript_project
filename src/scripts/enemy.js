@@ -30,30 +30,31 @@ class Enemy {
         this.muted = options.muted
         
         this.originalSpeed = options.speed || 10;
+        this.bulletDelay = options.bulletDelay || 40;
         this.speed = this.originalSpeed;
         this.height = this.radius * 2;
         this.width = this.radius * 2;
         this.deathSound = new Audio("./sounds/enemyDeath.wav")
-        this.deathSound.volume = 0.07;
-        this.loopLoc = 0;
+        this.deathSound.volume = 0.06;
+        this.loopLoc = 1;
         this.frame = 0;
-        this.bullets = []
+        this.bullets = [];
         this.collideAble = true;
-        this.updateImages()
+        this.updateImages();
     }
 
     shoot() {
         this._addBullets()
         this.bulletController.shoot(null, null, {
             bullets: this.bullets.splice(0),
-            delay: 9,
+            delay: this.bulletDelay,
         })
 
     }
     _addBullets(){
         for (let i = 0; i < Object.keys(bulletsPattern).length; i++) {
             const params = bulletsPattern[i];
-            this.bullets.push(new Bullet(this.x, this.y, params));
+            this.bullets.push(new Bullet(this.x + this.radius, this.y + this.radius, params));
         }
     }
     updateImages() {
@@ -110,7 +111,7 @@ class Enemy {
         let xDif = this.spots[num][0] - this.x;
         let yDif = this.spots[num][1] - this.y;
         let divisor = Math.max(Math.abs(xDif), Math.abs(yDif));
-        divisor = divisor < 1 ? 1 : divisor;
+        divisor = Math.abs(divisor) < 1 ? 1 : divisor;
         let xVector = xDif / divisor;
         let yVector = yDif / divisor;
         this.vector = [xVector, yVector]

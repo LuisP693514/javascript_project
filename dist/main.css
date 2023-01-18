@@ -191,6 +191,7 @@ nav {
     height: 40px;
     width: 40px;
     padding-top: 20px;
+    transform: translate(300%,0%);
 }
 
 #canvasdiv {
@@ -209,7 +210,7 @@ nav {
     width: 1280px;
     height: 720px;
     left: 50%;
-    transform: translate(-50%, -13%);
+    transform: translate(-50%, -21%);
 }
 
 #backGround {

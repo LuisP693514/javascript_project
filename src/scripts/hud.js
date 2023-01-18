@@ -12,6 +12,7 @@ class HUD {
 
     updateImages() {
     }
+    
     draw(options = {}) {
 
     }
@@ -103,7 +104,7 @@ class HUD {
         this.ctx.stroke();
 
 
-        // leftClick
+        // leftClick MOUSE
 
         point1X = this._scaleWidth(690)
         point1Y = this._scaleHeight(320)
@@ -155,8 +156,6 @@ class HUD {
 
         // Event listener to continue from title screen to the game
         this.canvas.addEventListener("mousedown", this._mouseDown)
-
-
     }
 
     _mouseDown = (e) => {

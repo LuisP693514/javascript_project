@@ -1,7 +1,7 @@
 class Bullet {
     constructor(x, y, options = {}) {
-        this.x = x;
-        this.y = y;
+        this.x = options.x || x;
+        this.y = options.y || y;
         this.damage = options.damage;
         this.speed = options.speed;
         

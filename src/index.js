@@ -3,6 +3,7 @@ const Enemy = require("./scripts/enemy.js");
 const BulletController = require("./scripts/bulletController.js");
 const EnemyController = require("./scripts/enemyController.js");
 const HUD = require("./scripts/hud.js");
+const Squishy = require("./scripts/squish.js");
 
 // Grabbing the canvas elements
 const field = document.getElementById("contents");
@@ -33,51 +34,47 @@ let player = new Player(rect.width / 2,
 
 const hudInterface = new HUD(hud, player);
 
+// Variables to keep the game going
 let gameLoop;
-let playerPressedPlay = false;
+let bossSpawned;
+let wave = 1;
+let countDownCountedDown;
+let newWaveJustStarted = true;
+let timer;
+let guns = [];
 
-// Waves keep the game going!
-let wave = 0;
-// Create waves
-// function generateWave(){
-//     wave++;
-//     let rows = wave * 2;
-//     for (let i = 0; i < rows; i++) {
-//        enemies.push(new Enemy(50 + i* 50, ))
-
-//     }
-// }
-const enemies = []
-const enemiesGuns = [];
-const enBc = new BulletController()
-const enBc2 = new BulletController()
-let enemy = new Enemy(50, 50, enBc)
-let enemy2 = new Enemy(1230, 670, enBc2)
-enemy2.loopLoc = 2;
-enemies.push(enemy, enemy2)
-enemiesGuns.push(enBc, enBc2)
+enemyController.createEnemies(wave)
 
 // The gameplay loop starts here
 function play() {
     defaultStyle();
     let currentTotalEnemyHealth = 0;
     let totalEnemyMaxHealth = 0;
+    if (newWaveJustStarted) {
+        newWaveJustStarted = false;
+        timer = setTimeout(() => {
+            countDownCountedDown = true;
+        }, 10000)
+    }
     fieldCtx.clearRect(0, 0, field.width, field.height)
     hudCtx.clearRect(0, 0, hud.width, hud.height)
     plBC.draw(fieldCtx);
-    enemies.forEach(enemy => {
+    enemyController.enemies.forEach(enemy => {
         if (enemy.health > 0) {
             plBC.collidesWith(enemy)
             enemy.draw(fieldCtx)
             currentTotalEnemyHealth += enemy.health
             totalEnemyMaxHealth += enemy.maxHp
+            if (!guns.includes(enemy.bulletController)) {
+                guns.push(enemy.bulletController)
+            }
         } else {
-            enemies.splice(enemies.indexOf(enemy), 1);
+            enemyController.enemies.splice(enemyController.enemies.indexOf(enemy), 1)
         }
     });
-    enemiesGuns.forEach(gun => {
-        gun.collidesWith(player)
-        gun.draw(fieldCtx)
+    guns.forEach(gun => {
+        gun.collidesWith(player);
+        gun.draw(fieldCtx);
     })
 
     if (player.health > 0) {
@@ -87,16 +84,23 @@ function play() {
         gameOver();
     }
     hudInterface.draw();
-    hudInterface.drawBossHp(currentTotalEnemyHealth, totalEnemyMaxHealth)
+    if (currentTotalEnemyHealth > 0 && bossSpawned) {
+        hudInterface.drawBossHp(currentTotalEnemyHealth, totalEnemyMaxHealth)
+        bossSpawned = false;
+    }
+    if (enemyController.enemies.length < 1|| countDownCountedDown) {
+        clearTimeout(timer)
+        countDownCountedDown = false;
+        enemyController.enemies.push("hi")
+        setTimeout(() => {
+            if (enemyController.enemies.length < 1) guns.splice(0)
+            enemyController.enemies.splice(0)
+            wave += 1;
+            newWaveJustStarted = true;
+            enemyController.createEnemies(wave)
+        }, 2000)
+    }
 }
-
-function animate() {
-
-
-    requestAnimationFrame(animate)
-}
-
-//
 
 // Customize styles for gameplay layer
 function defaultStyle() {
