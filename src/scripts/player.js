@@ -202,7 +202,6 @@ class Player {
             this.oldSpeed = this.speed;
             this.speed = this.speed / 2;
         };
-        if (k.code === "Space") this.spacePressed = true;
         if (k.code === "KeyJ") this.shootPressed = true;
     }
     keyUp = (k) => {
@@ -211,7 +210,7 @@ class Player {
         if (k.code === "KeyA") this.leftPressed = false;
         if (k.code === "KeyS") this.downPressed = false;
         if (k.code === "ShiftLeft") this.speed = this.oldSpeed;
-        if (k.code === "Space") this.spacePressed = false;
+        if (k.code === "Space") this.dodgePressed = true;
         if (k.code === "KeyJ") this.shootPressed = false;
     }
     _updateMouse() {
