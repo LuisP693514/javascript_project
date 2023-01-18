@@ -31,7 +31,11 @@ let player = new Player(rect.width / 2,
         canvas: field
     })
 
-const hudInterface = new HUD(hudCtx, player);
+const hudInterface = new HUD(hud, player);
+
+let gameLoop;
+let playerPressedPlay = false;
+
 // Waves keep the game going!
 let wave = 0;
 // Create waves
@@ -86,6 +90,12 @@ function play() {
     hudInterface.drawBossHp(currentTotalEnemyHealth, totalEnemyMaxHealth)
 }
 
+function animate() {
+
+
+    requestAnimationFrame(animate)
+}
+
 //
 
 // Customize styles for gameplay layer
@@ -94,7 +104,7 @@ function defaultStyle() {
     fieldCtx.shadowBlur = 30;
 }
 
-let gameLoop = setInterval(play, 1000 / 60);
+// gameLoop = setInterval(play, 1000 / 60);
 
 function fixResolution(canvas, ctx) {
     const dpr = window.devicePixelRatio || 1;
@@ -106,12 +116,12 @@ function fixResolution(canvas, ctx) {
 
     canvas.style.width = `${rect.width}px`;
     canvas.style.height = `${rect.height}px`;
-    
+
     ctx.imageSmoothingEnabled = true;
 }
 
 function gameOver() {
-    clearInterval(gameLoop)
+    clearInterval(gameLoop);
     setTimeout(() => {
         player = new Player(rect.width / 2,
             rect.height / 2, plBC,
@@ -119,7 +129,28 @@ function gameOver() {
                 strokeColor: "green",
                 canvas: field
             })
-        gameLoop = setInterval(play, 1000 / 60)
+        gameLoop = setInterval(play, 1000 / 60);
     }, 3000)
 }
 
+let titleLoop;
+
+function titleScreen() {
+    hudCtx.clearRect(0, 0, hud.width, hud.height)
+    const gradientBg = hudCtx.createLinearGradient(0, 0, 0, hud.height);
+    gradientBg.addColorStop(0, "#23353D");
+    gradientBg.addColorStop(1, "#0C337A");
+    hudCtx.fillStyle = gradientBg;
+    hudCtx.fillRect(0, 0, hud.width, hud.height)
+    hudInterface.drawTitleScreen()
+    if (hudInterface.playerPressedPlay) {
+        clearInterval(titleLoop)
+        gameLoop = setInterval(play, 1000 / 60)
+    };
+
+}
+
+titleLoop = setInterval(titleScreen, 1000 / 60)
+
+
+titleScreen();

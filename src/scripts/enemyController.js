@@ -12,7 +12,6 @@ class EnemyController {
                 enemy.draw(ctx)
             } else {
                 this.enemies.splice(this.enemies.indexOf(enemy), 1);
-                console.log("lol he died")
             }
         });
     }

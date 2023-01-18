@@ -29,7 +29,7 @@ class Enemy {
         this.vector = options.vector || [0, 0];
         this.muted = options.muted
         
-        this.originalSpeed = options.speed || 15;
+        this.originalSpeed = options.speed || 10;
         this.speed = this.originalSpeed;
         this.height = this.radius * 2;
         this.width = this.radius * 2;
@@ -46,7 +46,7 @@ class Enemy {
         this._addBullets()
         this.bulletController.shoot(null, null, {
             bullets: this.bullets.splice(0),
-            delay: 4,
+            delay: 9,
         })
 
     }

@@ -4,11 +4,13 @@ class Squishy extends Enemy{
 
     baseHealth = 3;
 
-    constructor(x, y, radius, health, bc, options = {}){
-        super(x,y,radius,health,bc,options);
+    constructor(x, y,bc, options = {}){
+        super(x,y,bc,options);
 
         this.speed = 9;
         this.health = baseHealth;
+        this.worth = 200;
+        
     }
 }
 
