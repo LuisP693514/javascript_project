@@ -4,7 +4,7 @@ class Bullet {
         this.y = options.y || y;
         this.damage = options.damage;
         this.speed = options.speed;
-        
+
         this.velocity = options.velocity || 0;
         this.strokeColor = options.strokeColor || "white";
         this.color = options.color || "black";
@@ -13,10 +13,10 @@ class Bullet {
     }
 
     isCollidingWith(sprite = {}) {
-        if (this.x  <= sprite.width + sprite.x &&
-            this.x  >= sprite.x &&
-            this.y  <= sprite.y + sprite.height &&
-            this.y  >= sprite.y) {
+        if (this.x <= sprite.width + sprite.x &&
+            this.x >= sprite.x &&
+            this.y <= sprite.y + sprite.height &&
+            this.y >= sprite.y) {
             return true;
         }
 
@@ -28,7 +28,7 @@ class Bullet {
         ctx.fillStyle = this.color
         this.speed += this.velocity;
         this.x += (this.vector[0] * this.speed);
-        this.y += (this.vector[1] * this.speed); 
+        this.y += (this.vector[1] * this.speed);
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true)
         ctx.closePath();

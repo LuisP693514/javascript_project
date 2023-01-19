@@ -37,12 +37,13 @@ const hudInterface = new HUD(hud, player);
 // Variables to keep the game going
 let gameLoop;
 let bossSpawned;
-let wave = 1;
+let wave = 0;
 let countDownCountedDown;
 let newWaveJustStarted = true;
 let timer;
 let guns = [];
 let timerIsSet = true;
+let timeBetweenWaves = 20000; // milliseconds
 
 enemyController.createEnemies(wave)
 
@@ -56,7 +57,7 @@ function play() {
         newWaveJustStarted = false;
         timer = setTimeout(() => {
             countDownCountedDown = true;
-        }, 10000)
+        }, timeBetweenWaves)
     }
 
     // Clear the frame
@@ -166,7 +167,7 @@ function titleScreen() {
                     canvas: field
                 })
             hudInterface.player = player;
-            wave = 1
+            wave = 0;
             bossSpawned = null;
             countDownCountedDown = null;
             guns = [];
@@ -193,3 +194,83 @@ function titleScreen() {
 }
 
 titleLoop = setInterval(titleScreen, 1000/60)
+
+
+// Background image
+
+const img = new Image();
+
+// User Variables - customize these to change the image being scrolled, its
+// direction, and the speed.
+img.src = "./images/Clouds/Clouds3/3.png";
+const canvasXSize = rect.width;
+const canvasYSize = rect.height;
+const speed = 10; // lower is faster
+const scale = 2.5;
+const y = -4.5; // vertical offset
+
+// Main program
+const dx = 0.75;
+let imgW;
+let imgH;
+let x = 0;
+let clearX;
+let clearY;
+
+img.onload = () => {
+  imgW = img.width * scale;
+  imgH = img.height * scale;
+
+  if (imgW > canvasXSize) {
+    // Image larger than canvas
+    x = canvasXSize - imgW;
+  }
+
+  // Check if image dimension is larger than canvas
+  clearX = Math.max(imgW, canvasXSize);
+  clearY = Math.max(imgH, canvasYSize);
+
+  // Get canvas context
+
+  // Set refresh rate
+  return setInterval(drawBackground, speed);
+};
+
+function drawBackground() {
+  bgCtx.clearRect(0, 0, clearX, clearY); // clear the canvas
+
+  // If image is <= canvas size
+  if (imgW <= canvasXSize) {
+    // Reset, start from beginning
+    if (x > canvasXSize) {
+      x = -imgW + x;
+    }
+
+    // Draw additional image1
+    if (x > 0) {
+      bgCtx.drawImage(img, -imgW + x, y, imgW, imgH);
+    }
+
+    // Draw additional image2
+    if (x - imgW > 0) {
+      bgCtx.drawImage(img, -imgW * 2 + x, y, imgW, imgH);
+    }
+  } else {
+    // Image is > canvas size
+    // Reset, start from beginning
+    if (x > canvasXSize) {
+      x = canvasXSize - imgW;
+    }
+
+    // Draw additional image
+    if (x > canvasXSize - imgW) {
+      bgCtx.drawImage(img, x - imgW + 1, y, imgW, imgH);
+    }
+  }
+
+  // Draw image
+  bgCtx.drawImage(img, x, y, imgW, imgH);
+
+  // Amount to move
+  x += dx;
+}

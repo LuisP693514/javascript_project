@@ -10,6 +10,13 @@ class Player {
         this.x = x;
         this.bulletController = bc;
 
+        // Upgradeable: 
+        this.speed = 8;
+        this.health = 5;
+        this.bulletDmg = 1;
+        this.bulletDelay = 4;
+        this.bulletSpeed = 20;
+
         // Defaults
         this.muted = options.muted;
         this.canvas = options.canvas;
@@ -22,13 +29,8 @@ class Player {
         this.bulletVelocity = 0.3;
         this.timeTillNextDamage = 0;
         this.collideAble = true;
+        this.oldSpeed = this.speed;
 
-        // Upgradeable: 
-        this.speed = 8;
-        this.health = 5;
-        this.bulletDmg = 1;
-        this.bulletDelay = 4;
-        this.bulletSpeed = 20;
 
         // Inputs from player
         addEventListener("keydown", this.keyDown)
@@ -199,7 +201,6 @@ class Player {
         if (k.code === "KeyA") this.leftPressed = true;
         if (k.code === "KeyS") this.downPressed = true;
         if (k.code === "ShiftLeft") {
-            this.oldSpeed = this.speed;
             this.speed = this.speed / 2;
         };
         if (k.code === "KeyJ") this.shootPressed = true;
