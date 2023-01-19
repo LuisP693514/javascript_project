@@ -30,6 +30,9 @@ This was my initial plan on making the page. However, as I was making the projec
  1. Adding infinite waves
  2. Adding a scoring system
  3. More intuitive inputs - currently the game requires a mouse to be played optimaly
+ 4. Add indicator for dodge cooldown
+ 5. Add power ups
+ 6. ...and more!
 
 ## Licenses
 
