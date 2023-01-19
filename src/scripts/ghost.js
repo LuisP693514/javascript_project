@@ -1,12 +1,11 @@
-const bulletsPattern = require("./bPatterns/bulletsPattern3");
-const Bullet = require("./bullet");
+const bulletsPattern = require("./bPatterns/bulletsPattern4.js");
 const Enemy = require("./enemy");
+const Bullet = require("./bullet.js");
 
-class Seeker extends Enemy {
 
+class Ghost extends Enemy {
 
-   
-    baseHealth = 5;
+    baseHealth = 20;
     images = [
         new Image()
     ]
@@ -27,6 +26,7 @@ class Seeker extends Enemy {
             [this.spotX1, this.spotY1],
             [this.spotX2, this.spotY2]
         ]
+        this.height = this.radius * 3
 
         this.updateImages();
 
@@ -35,8 +35,8 @@ class Seeker extends Enemy {
     updateImages() {
         this.images.forEach((image) => {
             image.width = this.radius * 2;
-            image.height = this.radius * 2;
-            image.src = `./images/sprites/holloweenSprites/Objects/Pumpkin4.png`;
+            image.height = this.radius * 3;
+            image.src = `./images/sprites/holloweenSprites/Objects/Ghost2.png`;
         });
     }
     _addBullets() {
@@ -57,7 +57,7 @@ class Seeker extends Enemy {
             this.x,
             this.y,
             this.radius * 2,
-            this.radius * 2
+            this.radius * 3
         )
         this.frame++;
     }
@@ -76,6 +76,8 @@ class Seeker extends Enemy {
         }
     }
 
+
+
 }
 
-module.exports = Seeker;
+module.exports = Ghost;

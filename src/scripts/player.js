@@ -15,7 +15,7 @@ class Player {
         this.canvas = options.canvas;
         this.strokeColor = options.strokeColor || "white";
         this.shootSound = new Audio("./sounds/shoot.wav")
-        this.shootSound.volume = 0.001;
+        this.shootSound.volume = 0.002;
         this.dodgeTimes = 1;
         this.height = 20;
         this.width = 20;

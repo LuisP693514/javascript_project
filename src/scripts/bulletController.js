@@ -15,6 +15,7 @@ class BulletController {
             this.timeTillNextShot = options.delay;
             if (options.shootSoundEff) {
                 const sound = options.shootSoundEff
+                options.muted ? sound.volume = 0 : sound.volume = 0.002;
                 sound.currentTime = 0;
                 sound.play()
             };

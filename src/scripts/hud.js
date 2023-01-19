@@ -12,8 +12,41 @@ class HUD {
 
     updateImages() {
     }
-    
-    draw(options = {}) {
+    renderGameover() {
+
+        //box
+        this.ctx.fillStyle = "black"
+        this.ctx.fillRect(0, 280, 1280, 120)
+
+        //text
+        this.ctx.fillStyle = "#C42B2B"
+        this.ctx.font = "50px 'monospace'"
+        this.ctx.textAlign = 'center'
+        this.ctx.textBaseline = "alphabetic"
+        this.ctx.fillText("You Died", 640, 360)
+
+        // press esc to restart
+
+        this.ctx.fillStyle = "white"
+        this.ctx.font = "15px 'monospace'"
+        this.ctx.fillText("Press ESC to restart", 640, 390)
+    }
+    draw() {
+
+        // Rendering HP
+        this.ctx.font = "60px 'monospace'"
+        this.ctx.textAlign = 'right'
+        this.ctx.fillStyle = "rgba(255,255,255, 0.2)"
+        this.ctx.textBaseline = "bottom"
+        this.ctx.fillText(`HP: ${this.player.health}`, 1280, 720)
+
+        // ESC to pause
+        this.ctx.font = "30px 'monospace'"
+        this.ctx.textAlign = "right"
+        this.ctx.fillStyle = "rgba(255,255,255, 0.2)"
+        this.ctx.textBaseline = "top"
+        this.ctx.fillText("ESC to pause", 1280, 100)
+
 
     }
     drawBossHp(currentHp, maxHp) {
@@ -27,6 +60,7 @@ class HUD {
 
     drawTitleScreen() {
         // Title
+        this.ctx.textBaseline = "alphabetic"
         this.ctx.fillStyle = "White"
         this.ctx.font = "50px 'monospace'"
         this.ctx.textAlign = "center"
@@ -155,14 +189,14 @@ class HUD {
         this.ctx.fillText("of either space bar or right-click", this._scaleWidth(1010), this._scaleHeight(580))
 
         // Event listener to continue from title screen to the game
-        this.canvas.addEventListener("mousedown", this._mouseDown)
+        addEventListener("mousedown", this._mouseDown)
     }
 
     _mouseDown = (e) => {
         e.preventDefault()
         if (e.button === 0) {
             this.playerPressedPlay = true;
-            this.canvas.removeEventListener("mousedown", this._mousemove)
+            removeEventListener("mousedown", this._mouseDown)
         };
 
     }

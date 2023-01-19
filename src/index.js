@@ -23,8 +23,8 @@ fixResolution(bg, bgCtx);
 fixResolution(hud, hudCtx);
 
 //Creating new instances for the game
-const plBC = new BulletController(field); // field layer is where the game takes place
-const enemyController = new EnemyController(field);
+let plBC = new BulletController(field); // field layer is where the game takes place
+let enemyController = new EnemyController(field);
 let player = new Player(rect.width / 2,
     rect.height / 2, plBC,
     {
@@ -42,6 +42,7 @@ let countDownCountedDown;
 let newWaveJustStarted = true;
 let timer;
 let guns = [];
+let timerIsSet = true;
 
 enemyController.createEnemies(wave)
 
@@ -51,13 +52,18 @@ function play() {
     let currentTotalEnemyHealth = 0;
     let totalEnemyMaxHealth = 0;
     if (newWaveJustStarted) {
+        if (wave === 5) bossSpawned = true;
         newWaveJustStarted = false;
         timer = setTimeout(() => {
             countDownCountedDown = true;
         }, 10000)
     }
+
+    // Clear the frame
     fieldCtx.clearRect(0, 0, field.width, field.height)
     hudCtx.clearRect(0, 0, hud.width, hud.height)
+
+    // Start drawing the new frame
     plBC.draw(fieldCtx);
     enemyController.enemies.forEach(enemy => {
         if (enemy.health > 0) {
@@ -86,19 +92,24 @@ function play() {
     hudInterface.draw();
     if (currentTotalEnemyHealth > 0 && bossSpawned) {
         hudInterface.drawBossHp(currentTotalEnemyHealth, totalEnemyMaxHealth)
-        bossSpawned = false;
     }
-    if (enemyController.enemies.length < 1|| countDownCountedDown) {
+    if (enemyController.enemies.length < 1 || countDownCountedDown) {
         clearTimeout(timer)
         countDownCountedDown = false;
-        enemyController.enemies.push("hi")
-        setTimeout(() => {
-            if (enemyController.enemies.length < 1) guns.splice(0)
-            enemyController.enemies.splice(0)
-            wave += 1;
-            newWaveJustStarted = true;
-            enemyController.createEnemies(wave)
-        }, 2000)
+        if (bossSpawned && enemyController.enemies.length < 1) {
+            bossSpawned = false;
+            gameOver()
+        }
+        if (timerIsSet && !bossSpawned) {
+            timerIsSet = false;
+            setTimeout(() => {
+                wave += 1;
+                newWaveJustStarted = true;
+                timerIsSet = true;
+                enemyController.createEnemies(wave);
+                if (enemyController.enemies.length < 1) guns.splice(0);
+            }, 2000)
+        }
     }
 }
 
@@ -124,17 +135,11 @@ function fixResolution(canvas, ctx) {
     ctx.imageSmoothingEnabled = true;
 }
 
+
 function gameOver() {
     clearInterval(gameLoop);
-    setTimeout(() => {
-        player = new Player(rect.width / 2,
-            rect.height / 2, plBC,
-            {
-                strokeColor: "green",
-                canvas: field
-            })
-        gameLoop = setInterval(play, 1000 / 60);
-    }, 3000)
+    player = null
+    hudInterface.renderGameover();
 }
 
 let titleLoop;
@@ -148,13 +153,43 @@ function titleScreen() {
     hudCtx.fillRect(0, 0, hud.width, hud.height)
     hudInterface.drawTitleScreen()
     if (hudInterface.playerPressedPlay) {
+        hudInterface.playerPressedPlay = false;
         clearInterval(titleLoop)
+        // If player is dead, start a new game
+        if (player === null) {
+            plBC = null;
+            plBC = new BulletController(field)
+            player = new Player(rect.width / 2,
+                rect.height / 2, plBC,
+                {
+                    strokeColor: "green",
+                    canvas: field
+                })
+            hudInterface.player = player;
+            wave = 1
+            bossSpawned = null;
+            countDownCountedDown = null;
+            guns = [];
+            timer = null;
+            newWaveJustStarted = true;
+            timerIsSet = true;
+            enemyController = null;
+            enemyController = new EnemyController(field);
+            enemyController.createEnemies(wave)
+
+        }
+        const escapeFunc = (e) => {
+            e.preventDefault()
+            if (e.code === "Escape") {
+                clearInterval(gameLoop)
+                titleLoop = setInterval(titleScreen, 1000 / 60)
+                removeEventListener("keydown", escapeFunc)
+            }
+        }
+        addEventListener("keydown", escapeFunc)
         gameLoop = setInterval(play, 1000 / 60)
     };
 
 }
 
-titleLoop = setInterval(titleScreen, 1000 / 60)
-
-
-titleScreen();
+titleLoop = setInterval(titleScreen, 1000/60)

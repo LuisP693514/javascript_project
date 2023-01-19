@@ -30,13 +30,13 @@ class Enemy {
         this.muted = options.muted
         
         this.originalSpeed = options.speed || 10;
-        this.bulletDelay = options.bulletDelay || 40;
+        this.bulletDelay = options.bulletDelay || 35;
         this.speed = this.originalSpeed;
         this.height = this.radius * 2;
         this.width = this.radius * 2;
         this.deathSound = new Audio("./sounds/enemyDeath.wav")
         this.deathSound.volume = 0.06;
-        this.loopLoc = 1;
+        this.loopLoc = options.loopLoc || 1;
         this.frame = 0;
         this.bullets = [];
         this.collideAble = true;
@@ -67,6 +67,7 @@ class Enemy {
     }
     draw(ctx) {
         if (this.frame >= this.images.length) this.frame = 0;
+        this.muted ? this.deathSound.volume = 0 : this.deathSound.volume = 0.07
         this.shoot()
         this.movementLoop();
         ctx.shadowColor = this.color;
