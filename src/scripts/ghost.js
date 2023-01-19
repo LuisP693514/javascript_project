@@ -46,9 +46,9 @@ class Ghost extends Enemy {
         }
     }
 
-    draw(ctx) {
+    draw(ctx, options = {}) {
         if (this.frame >= this.images.length) this.frame = 0;
-        this.shoot()
+        this.shoot(options)
         this.movementLoop();
         ctx.shadowColor = this.color;
         ctx.shadowBlur = 30;

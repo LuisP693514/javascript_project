@@ -18,7 +18,8 @@ class Player {
         this.bulletSpeed = 20;
 
         // Defaults
-        this.muted = options.muted;
+        this.muted = options.muted || false;
+        this.mutedToggle = 0;
         this.canvas = options.canvas;
         this.strokeColor = options.strokeColor || "white";
         this.shootSound = new Audio("./sounds/shoot.wav")
@@ -95,7 +96,8 @@ class Player {
                     vector: vector,
                     color: this.color || "#00AAD3",
                     shootSoundEff: this.shootSound,
-                    bulletVelocity: this.bulletVelocity
+                    bulletVelocity: this.bulletVelocity,
+                    muted: this.muted
 
                 });
         }
@@ -204,6 +206,12 @@ class Player {
             this.speed = this.speed / 2;
         };
         if (k.code === "KeyJ") this.shootPressed = true;
+        if (k.code === "KeyM") {
+            if (this.mutedToggle === 0){
+                this.muted = !this.muted;
+                this.mutedToggle = 1;
+            }
+        }
     }
     keyUp = (k) => {
         if (k.code === "KeyW") this.upPressed = false;
@@ -213,6 +221,8 @@ class Player {
         if (k.code === "ShiftLeft") this.speed = this.oldSpeed;
         if (k.code === "Space") this.dodgePressed = true;
         if (k.code === "KeyJ") this.shootPressed = false;
+        if (k.code === "KeyM") this.mutedToggle = 0;
+
     }
     _updateMouse() {
         const rect = this.canvas.getBoundingClientRect();

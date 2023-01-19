@@ -39,10 +39,10 @@ class BulletController {
             b.x >= 1280 + b.radius * 2);
     }
 
-    collidesWith(sprite) {
+    collidesWith(sprite, options = {}) {
         this.bullets.forEach(bullet => {
             if (bullet.isCollidingWith(sprite) && sprite.collideAble) {
-                sprite.takeDamage(bullet.damage);
+                sprite.takeDamage(bullet.damage, options);
                 this.bullets.splice(this.bullets.indexOf(bullet), 1);
                 return true;
             } else {

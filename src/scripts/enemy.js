@@ -27,7 +27,6 @@ class Enemy {
         this.radius = options.radius || 20;
         this.color = options.color || "red";
         this.vector = options.vector || [0, 0];
-        this.muted = options.muted
         
         this.originalSpeed = options.speed || 10;
         this.bulletDelay = options.bulletDelay || 35;
@@ -65,10 +64,10 @@ class Enemy {
         });
         
     }
-    draw(ctx) {
+    draw(ctx, options = {}) {
         if (this.frame >= this.images.length) this.frame = 0;
         this.muted ? this.deathSound.volume = 0 : this.deathSound.volume = 0.07
-        this.shoot()
+        this.shoot(options)
         this.movementLoop();
         ctx.shadowColor = this.color;
         ctx.shadowBlur = 30;
@@ -135,11 +134,14 @@ class Enemy {
         }
     }
 
-    takeDamage(num) {
+    takeDamage(num, options = {}) {
         this.health -= num;
         if (this.health <= 0) {
-            this.deathSound.currentTime = 0;
-            this.deathSound.play();
+            if (!options.muted) {
+
+                this.deathSound.currentTime = 0;
+                this.deathSound.play();
+            }
         }
     }
 }

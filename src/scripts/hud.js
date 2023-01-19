@@ -188,6 +188,16 @@ class HUD {
         this.ctx.fillText("* The dodge mechanic triggers upon the release", this._scaleWidth(1010), this._scaleHeight(550))
         this.ctx.fillText("of either space bar or right-click", this._scaleWidth(1010), this._scaleHeight(580))
 
+        // Muted
+        this.ctx.font = "40px 'monospace'"
+        this.ctx.strokeRect(this._scaleWidth(1200), this._scaleHeight(200), this._scaleWidth(60), this._scaleHeight(60))
+        this.ctx.strokeText("M", this._scaleWidth(1230), this._scaleHeight(243))
+        
+        //Toggle sound with
+        this.ctx.font = "24px 'monospace'"
+        this.ctx.fillText("Toggle sound with", this._scaleWidth(1096), this._scaleHeight(238))
+
+
         // Event listener to continue from title screen to the game
         addEventListener("mousedown", this._mouseDown)
     }

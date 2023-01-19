@@ -32,7 +32,9 @@ This was my initial plan on making the page. However, as I was making the projec
  3. More intuitive inputs - currently the game requires a mouse to be played optimaly
  4. Add indicator for dodge cooldown
  5. Add power ups
- 6. ...and more!
+ 6. Add more Sound effects
+ 7. Add music
+ 8. ...and more!
 
 ## Licenses
 

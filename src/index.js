@@ -44,6 +44,7 @@ let timer;
 let guns = [];
 let timerIsSet = true;
 let timeBetweenWaves = 20000; // milliseconds
+let muted = false;
 
 enemyController.createEnemies(wave)
 
@@ -52,6 +53,7 @@ function play() {
     defaultStyle();
     let currentTotalEnemyHealth = 0;
     let totalEnemyMaxHealth = 0;
+    muted = player.muted
     if (newWaveJustStarted) {
         if (wave === 5) bossSpawned = true;
         newWaveJustStarted = false;
@@ -68,8 +70,12 @@ function play() {
     plBC.draw(fieldCtx);
     enemyController.enemies.forEach(enemy => {
         if (enemy.health > 0) {
-            plBC.collidesWith(enemy)
-            enemy.draw(fieldCtx)
+            plBC.collidesWith(enemy, {
+                muted: muted
+            })
+            enemy.draw(fieldCtx, {
+                muted: muted
+            })
             currentTotalEnemyHealth += enemy.health
             totalEnemyMaxHealth += enemy.maxHp
             if (!guns.includes(enemy.bulletController)) {
@@ -80,7 +86,10 @@ function play() {
         }
     });
     guns.forEach(gun => {
-        gun.collidesWith(player);
+        gun.collidesWith(player, {
+            muted: muted
+        }
+        );
         gun.draw(fieldCtx);
     })
 
@@ -164,7 +173,8 @@ function titleScreen() {
                 rect.height / 2, plBC,
                 {
                     strokeColor: "green",
-                    canvas: field
+                    canvas: field,
+                    muted: muted
                 })
             hudInterface.player = player;
             wave = 0;
@@ -193,7 +203,7 @@ function titleScreen() {
 
 }
 
-titleLoop = setInterval(titleScreen, 1000/60)
+titleLoop = setInterval(titleScreen, 1000 / 60)
 
 
 // Background image
@@ -218,59 +228,59 @@ let clearX;
 let clearY;
 
 img.onload = () => {
-  imgW = img.width * scale;
-  imgH = img.height * scale;
+    imgW = img.width * scale;
+    imgH = img.height * scale;
 
-  if (imgW > canvasXSize) {
-    // Image larger than canvas
-    x = canvasXSize - imgW;
-  }
+    if (imgW > canvasXSize) {
+        // Image larger than canvas
+        x = canvasXSize - imgW;
+    }
 
-  // Check if image dimension is larger than canvas
-  clearX = Math.max(imgW, canvasXSize);
-  clearY = Math.max(imgH, canvasYSize);
+    // Check if image dimension is larger than canvas
+    clearX = Math.max(imgW, canvasXSize);
+    clearY = Math.max(imgH, canvasYSize);
 
-  // Get canvas context
+    // Get canvas context
 
-  // Set refresh rate
-  return setInterval(drawBackground, speed);
+    // Set refresh rate
+    return setInterval(drawBackground, speed);
 };
 
 function drawBackground() {
-  bgCtx.clearRect(0, 0, clearX, clearY); // clear the canvas
+    bgCtx.clearRect(0, 0, clearX, clearY); // clear the canvas
 
-  // If image is <= canvas size
-  if (imgW <= canvasXSize) {
-    // Reset, start from beginning
-    if (x > canvasXSize) {
-      x = -imgW + x;
+    // If image is <= canvas size
+    if (imgW <= canvasXSize) {
+        // Reset, start from beginning
+        if (x > canvasXSize) {
+            x = -imgW + x;
+        }
+
+        // Draw additional image1
+        if (x > 0) {
+            bgCtx.drawImage(img, -imgW + x, y, imgW, imgH);
+        }
+
+        // Draw additional image2
+        if (x - imgW > 0) {
+            bgCtx.drawImage(img, -imgW * 2 + x, y, imgW, imgH);
+        }
+    } else {
+        // Image is > canvas size
+        // Reset, start from beginning
+        if (x > canvasXSize) {
+            x = canvasXSize - imgW;
+        }
+
+        // Draw additional image
+        if (x > canvasXSize - imgW) {
+            bgCtx.drawImage(img, x - imgW + 1, y, imgW, imgH);
+        }
     }
 
-    // Draw additional image1
-    if (x > 0) {
-      bgCtx.drawImage(img, -imgW + x, y, imgW, imgH);
-    }
+    // Draw image
+    bgCtx.drawImage(img, x, y, imgW, imgH);
 
-    // Draw additional image2
-    if (x - imgW > 0) {
-      bgCtx.drawImage(img, -imgW * 2 + x, y, imgW, imgH);
-    }
-  } else {
-    // Image is > canvas size
-    // Reset, start from beginning
-    if (x > canvasXSize) {
-      x = canvasXSize - imgW;
-    }
-
-    // Draw additional image
-    if (x > canvasXSize - imgW) {
-      bgCtx.drawImage(img, x - imgW + 1, y, imgW, imgH);
-    }
-  }
-
-  // Draw image
-  bgCtx.drawImage(img, x, y, imgW, imgH);
-
-  // Amount to move
-  x += dx;
+    // Amount to move
+    x += dx;
 }
