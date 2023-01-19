@@ -17,6 +17,10 @@ If the player decides to not try to eliminate any enemies, the game can get hect
 
 ![bullet-Hell image][bulletHell]
 
+The first boss showcases an adaptable HP Bar at the top of the screen that updates based on the total hp of all the enemies on screen. Showcased here:
+
+![Boss image][bossroom]
+
 There is currently no win screen at the moment. However the game would restart from scratch.
 
 ## Wireframe
@@ -47,3 +51,4 @@ Icon license: Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/O
 [wireframe]: ./images/readMeImages/wireframe.png
 [1stWave]: ./images/readMeImages/1stWaveImage.png
 [bulletHell]: ./images/readMeImages/bulletHell.png
+[bossroom]: ./images/readMeImages/bossroom.png
