@@ -5,7 +5,7 @@ const Enemy = require("./enemy");
 class Seeker extends Enemy {
 
 
-   
+
     baseHealth = 5;
     images = [
         new Image()
@@ -42,7 +42,7 @@ class Seeker extends Enemy {
     _addBullets() {
         for (let i = 0; i < Object.keys(bulletsPattern).length; i++) {
             const params = bulletsPattern[i];
-            this.bullets.push(new Bullet(this.x + this.radius, this.y + this.radius, params));
+            this.bullets.push(new Bullet(this.x + this.radius, this.y + this.radius,params));
         }
     }
 

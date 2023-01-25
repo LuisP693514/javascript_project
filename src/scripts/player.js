@@ -185,9 +185,7 @@ class Player {
             this.shootPressed = true;
             this._updateMouse()
         }
-        // if (k.button === 2) {
-        //     this.dodgePressed = true;
-        // }
+        
     }
     mouseUp = (k) => {
         if (k.button === 0) this.shootPressed = false;

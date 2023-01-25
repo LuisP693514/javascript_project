@@ -1,6 +1,8 @@
 ## Introduction
 Al Hollow's Bullets is a bullet-hell game where the player has to dodge the bullets to survive. The main objective is just survival and getting as far as possible. Currently, the game is not in its complete state. I do plan on adding an infinite game loop. As the game stands right now, there are only 5 waves of enemies that spawn, where the 5th wave is a boss fight. 
 
+You can play the game [here][liveSite].
+
 ## MVPs
 
 This project uses the canvas library to render the game onto the page. The title screen / pause-screen was all drawn using canvas. There are no images involved there. This allows me to possibly add animations in the future to make that screen come to life.
@@ -52,3 +54,4 @@ Icon license: Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/O
 [1stWave]: ./images/readMeImages/1stWaveImage.png
 [bulletHell]: ./images/readMeImages/bulletHell.png
 [bossroom]: ./images/readMeImages/bossroom.png
+[liveSite]: https://luisp693514.github.io/javascript_project/

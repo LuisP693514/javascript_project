@@ -199,14 +199,15 @@ class HUD {
 
 
         // Event listener to continue from title screen to the game
-        addEventListener("mousedown", this._mouseDown)
+        this.canvas.addEventListener("mousedown", this._mouseDown.bind(this))
     }
 
     _mouseDown = (e) => {
         e.preventDefault()
-        if (e.button === 0) {
+        // e.stopPropagation();
+        if (!this.playerPressedPlay && e.button === 0) {
             this.playerPressedPlay = true;
-            removeEventListener("mousedown", this._mouseDown)
+            this.canvas.removeEventListener("mousedown", this._mouseDown)
         };
 
     }

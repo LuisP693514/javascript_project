@@ -56,7 +56,7 @@ class EnemyController {
     }
     _generateWave1 = () => {
         this.enemies.push(
-            new Squishy(1220, 20, new BulletController(),
+            new Squishy(1320, 20, new BulletController(),
                 {
                     speed: 5,
                     health: 2,
@@ -69,7 +69,7 @@ class EnemyController {
 
                 }
             ),
-            new Squishy(20, 660, new BulletController(),
+            new Squishy(-80, 660, new BulletController(),
                 {
                     speed: 5,
                     health: 2,
@@ -86,7 +86,22 @@ class EnemyController {
     }
     _generateWave2 = () => {
         this.enemies.push(
-            new Seeker(20, 660, new BulletController(),
+            // bottom left
+            new Seeker(-80, 760, new BulletController(),
+                {
+                    speed: 7,
+                    health: 2,
+                    spotX1: 20,
+                    spotY1: 660,
+                    spotX2: 1220,
+                    spotY2: 20,
+                    hpMultiplier: 1.4,
+                    bulletDelay: 55
+
+                }
+            ),
+            // top right
+            new Seeker(1320, -80, new BulletController(),
                 {
                     speed: 7,
                     health: 2,
@@ -94,12 +109,27 @@ class EnemyController {
                     spotY1: 20,
                     spotX2: 20,
                     spotY2: 660,
-                    hpMultiplier: 1.5,
+                    hpMultiplier: 1.4,
                     bulletDelay: 55
 
                 }
             ),
-            new Seeker(20, 20, new BulletController(),
+            // top left
+            new Seeker(-80, -80, new BulletController(),
+                {
+                    speed: 7,
+                    health: 2,
+                    spotX1: 20,
+                    spotY1: 20,
+                    spotX2: 1220,
+                    spotY2: 660,
+                    hpMultiplier: 1.4,
+                    bulletDelay: 55
+
+                }
+            ),
+            // botton right
+            new Seeker(1320, 760, new BulletController(),
                 {
                     speed: 7,
                     health: 2,
@@ -107,7 +137,7 @@ class EnemyController {
                     spotY1: 660,
                     spotX2: 20,
                     spotY2: 20,
-                    hpMultiplier: 1.5,
+                    hpMultiplier: 1.4,
                     bulletDelay: 55
 
                 }
@@ -124,12 +154,12 @@ class EnemyController {
                     spotY1: 660,
                     spotX2: 20,
                     spotY2: 360,
-                    hpMultiplier: 1.8,
+                    hpMultiplier: 1.4,
                     bulletDelay: 50
 
                 }
             ),
-            new Seeker(-100, 20, new BulletController(),
+            new Seeker(1300, 20, new BulletController(),
                 {
                     speed: 7,
                     health: 3,
@@ -137,7 +167,7 @@ class EnemyController {
                     spotY1: 20,
                     spotX2: 1220,
                     spotY2: 360,
-                    hpMultiplier: 1.8,
+                    hpMultiplier: 1.4,
                     bulletDelay: 50
 
                 }
@@ -150,12 +180,12 @@ class EnemyController {
                     spotY1: 20,
                     spotX2: 960,
                     spotY2: 660,
-                    hpMultiplier: 1.8,
+                    hpMultiplier: 1.4,
                     bulletDelay: 50
 
                 }
             ),
-            new Squishy(-100, 660, new BulletController(),
+            new Squishy(1320, 660, new BulletController(),
                 {
                     speed: 5,
                     health: 3,
@@ -163,7 +193,7 @@ class EnemyController {
                     spotY1: 660,
                     spotX2: 320,
                     spotY2: 20,
-                    hpMultiplier: 1.8,
+                    hpMultiplier: 1.4,
                     bulletDelay: 50
 
                 }

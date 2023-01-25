@@ -67,7 +67,11 @@ function play() {
     hudCtx.clearRect(0, 0, hud.width, hud.height)
 
     // Start drawing the new frame
+
+    // First draw the player's bullets so they appear under everything else
     plBC.draw(fieldCtx);
+
+    // Draw enemies next
     enemyController.enemies.forEach(enemy => {
         if (enemy.health > 0) {
             plBC.collidesWith(enemy, {
@@ -85,6 +89,8 @@ function play() {
             enemyController.enemies.splice(enemyController.enemies.indexOf(enemy), 1)
         }
     });
+
+    // draw each enemy gun seperate from the enemy sprite
     guns.forEach(gun => {
         gun.collidesWith(player, {
             muted: muted
@@ -93,16 +99,23 @@ function play() {
         gun.draw(fieldCtx);
     })
 
+    // Draw the player if they are alive
     if (player.health > 0) {
         player.draw(fieldCtx);
     } else {
         player = null;
         gameOver();
     }
+
+    // Draw the information on screen
     hudInterface.draw();
+
+    // Boss hp bar
     if (currentTotalEnemyHealth > 0 && bossSpawned) {
         hudInterface.drawBossHp(currentTotalEnemyHealth, totalEnemyMaxHealth)
     }
+
+    // New wave mechanic
     if (enemyController.enemies.length < 1 || countDownCountedDown) {
         clearTimeout(timer)
         countDownCountedDown = false;
@@ -163,7 +176,6 @@ function titleScreen() {
     hudCtx.fillRect(0, 0, hud.width, hud.height)
     hudInterface.drawTitleScreen()
     if (hudInterface.playerPressedPlay) {
-        hudInterface.playerPressedPlay = false;
         clearInterval(titleLoop)
         // If player is dead, start a new game
         if (player === null) {
@@ -197,6 +209,7 @@ function titleScreen() {
                 removeEventListener("keydown", escapeFunc)
             }
         }
+        hudInterface.playerPressedPlay = false;
         addEventListener("keydown", escapeFunc)
         gameLoop = setInterval(play, 1000 / 60)
     };
@@ -210,8 +223,6 @@ titleLoop = setInterval(titleScreen, 1000 / 60)
 
 const img = new Image();
 
-// User Variables - customize these to change the image being scrolled, its
-// direction, and the speed.
 img.src = "./images/Clouds/Clouds3/3.png";
 const canvasXSize = rect.width;
 const canvasYSize = rect.height;
@@ -239,8 +250,6 @@ img.onload = () => {
     // Check if image dimension is larger than canvas
     clearX = Math.max(imgW, canvasXSize);
     clearY = Math.max(imgH, canvasYSize);
-
-    // Get canvas context
 
     // Set refresh rate
     return setInterval(drawBackground, speed);
